@@ -80,7 +80,7 @@
             transition: opacity 0.2s;
         }
         .logo-link:hover { opacity: 0.85; }
-        .logo-link img { height: 56px; }
+        .logo-link img { height: 80px; }
 
         h1 {
             font-family: 'Rubik', sans-serif;
@@ -507,7 +507,7 @@
             text-align: center;
             padding: 2.5rem 1rem 2rem;
         }
-        footer img { height: 28px; margin-bottom: 0.6rem; }
+        footer img { height: 56px; margin-bottom: 0.6rem; }
         footer p {
             font-size: 0.78rem; color: var(--text-dim);
         }
@@ -555,9 +555,8 @@
                     </div>
 
                     <div class="region-toggle">
-                        <button class="region-btn active" data-region="india" onclick="setRegion('india')">🇮🇳 India</button>
-                        <button class="region-btn" data-region="middleeast" onclick="setRegion('middleeast')">🇦🇪 Middle East</button>
-                        <button class="region-btn" data-region="usd" onclick="setRegion('usd')">🌐 USD</button>
+                        <button class="region-btn active" data-region="india" onclick="setRegion('india')">🇮🇳 India (₹)</button>
+                        <button class="region-btn" data-region="usd" onclick="setRegion('usd')">🌐 USD ($)</button>
                     </div>
 
                     <div class="fg">
@@ -774,12 +773,6 @@ const CFG = {
         feeRange: '₹300–800', defaultFee: 500,
         benchNoShow: '18–25%', benchFollowup: '35–45%', benchChurn: '30–40%',
         thbCost: 8000000   // ₹80 lakh
-    },
-    middleeast: {
-        curr: 'AED', label: 'Middle East',
-        feeRange: 'AED 100–300', defaultFee: 150,
-        benchNoShow: '15–22%', benchFollowup: '40–50%', benchChurn: '25–35%',
-        thbCost: 400000     // AED equivalent (~₹80L)
     },
     usd: {
         curr: '$', label: 'Global (USD)',
