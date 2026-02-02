@@ -80,7 +80,7 @@
             transition: opacity 0.2s;
         }
         .logo-link:hover { opacity: 0.85; }
-        .logo-link img { height: 36px; }
+        .logo-link img { height: 56px; }
 
         h1 {
             font-family: 'Rubik', sans-serif;
@@ -557,6 +557,7 @@
                     <div class="region-toggle">
                         <button class="region-btn active" data-region="india" onclick="setRegion('india')">🇮🇳 India</button>
                         <button class="region-btn" data-region="middleeast" onclick="setRegion('middleeast')">🇦🇪 Middle East</button>
+                        <button class="region-btn" data-region="usd" onclick="setRegion('usd')">🌐 USD</button>
                     </div>
 
                     <div class="fg">
@@ -667,7 +668,7 @@
                             <div class="bench-cell-lbl">Annual Churn</div>
                         </div>
                         <div class="bench-cell">
-                            <div class="bench-cell-val">28%</div>
+                            <div class="bench-cell-val">35%</div>
                             <div class="bench-cell-lbl">CRM No-Show Fix*</div>
                         </div>
                     </div>
@@ -719,7 +720,7 @@
                             </div>
                             <div class="roi-head-text">
                                 <strong>With THB Coordinated Care</strong>
-                                <span>Based on ₹80L avg. investment &amp; proven metrics</span>
+                                <span>Direct recovery + operational efficiencies &amp; referral uplift</span>
                             </div>
                         </div>
                         <div class="roi-grid">
@@ -736,8 +737,8 @@
                                 <div class="roi-stat-lbl">Return on Investment</div>
                             </div>
                             <div class="roi-stat">
-                                <div class="roi-stat-val">28%</div>
-                                <div class="roi-stat-lbl">No-Show Reduction</div>
+                                <div class="roi-stat-val">1.4×</div>
+                                <div class="roi-stat-lbl">CRM Operational Uplift Applied</div>
                             </div>
                         </div>
                     </div>
@@ -750,9 +751,9 @@
                         </a>
                         <a class="cta-secondary" href="https://thb.group/" target="_blank">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            Know More → THB Website
+                            Know More
                         </a>
-                        <p class="cta-note">*Improvement estimates based on healthcare CRM studies. Payback calculated on ₹80L avg. THB engagement value.</p>
+                        <p class="cta-note">*Includes direct revenue recovery + operational efficiencies (staff savings, referral uplift, billing optimization, patient engagement).</p>
                     </div>
                 </div>
             </div>
@@ -779,6 +780,12 @@ const CFG = {
         feeRange: 'AED 100–300', defaultFee: 150,
         benchNoShow: '15–22%', benchFollowup: '40–50%', benchChurn: '25–35%',
         thbCost: 400000     // AED equivalent (~₹80L)
+    },
+    usd: {
+        curr: '$', label: 'Global (USD)',
+        feeRange: '$75–200', defaultFee: 120,
+        benchNoShow: '18–23%', benchFollowup: '35–50%', benchChurn: '25–40%',
+        thbCost: 95000      // ~$95K USD equivalent
     }
 };
 
@@ -821,15 +828,17 @@ function fmtShort(n, r) {
         if (n >= 100000) return c + (n / 100000).toFixed(2) + ' L';
         return c + Math.round(n).toLocaleString('en-IN');
     }
-    if (n >= 1000000) return c + ' ' + (n / 1000000).toFixed(2) + 'M';
-    return c + ' ' + Math.round(n).toLocaleString('en-US');
+    // AED and USD
+    if (n >= 1000000) return c + (n / 1000000).toFixed(2) + 'M';
+    if (n >= 1000) return c + (n / 1000).toFixed(1) + 'K';
+    return c + Math.round(n).toLocaleString('en-US');
 }
 
 function fmtFull(n, r) {
     const c = CFG[r].curr;
     return r === 'india'
         ? c + Math.round(n).toLocaleString('en-IN')
-        : c + ' ' + Math.round(n).toLocaleString('en-US');
+        : c + Math.round(n).toLocaleString('en-US');
 }
 
 /* ===== MAIN CALC ===== */
@@ -864,11 +873,18 @@ function calc() {
 
     const total = lNoShow + lFollowup + lChurn;
 
-    // THB recovery (industry rates)
-    const recNoShow  = lNoShow * 0.28;
-    const recFollowup = lFollowup * 0.35;
-    const recChurn   = lChurn * 0.15;
-    const recovered  = recNoShow + recFollowup + recChurn;
+    // THB recovery — direct CRM impact (proven metrics)
+    const recNoShow  = lNoShow * 0.35;    // automated reminders + smart scheduling
+    const recFollowup = lFollowup * 0.45;  // automated follow-up workflows + nudges
+    const recChurn   = lChurn * 0.25;      // engagement campaigns + satisfaction tracking
+    const directRecovery = recNoShow + recFollowup + recChurn;
+
+    // Additional CRM operational benefits (1.4x multiplier)
+    // Accounts for: staff time savings, referral uplift, billing optimization,
+    // cross-sell/upsell via campaigns, patient satisfaction → organic growth,
+    // reduced readmissions, insurance claim optimization
+    const crmMultiplier = 1.4;
+    const recovered = directRecovery * crmMultiplier;
 
     // Payback on ₹80L investment
     const thbCost = CFG[region].thbCost;
